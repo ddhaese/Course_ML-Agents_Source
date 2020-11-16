@@ -1,0 +1,44 @@
+
+```{r include=FALSE}
+library(knitr)
+library(data.table)
+library(magrittr)
+
+opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE,
+  warning = FALSE)
+
+dyad <- readRDS("r/Palette_5YR_5B_Dyad.RDS")
+palette(dyad[c(9, 20, 66)])
+```
+
+# Zelf een eigen intelligente agent creëren
+
+Bovenop de interacties die de agent kan hebben met de andere spelobjecten moet je over 4 punten zeer goed nadenken:
+
+- Wat zijn de bewegingsvrijheden van mijn agent, i.e. de set van acties die de agent kan uitvoeren?
+   _Bijv.: {stap vooruit, stap achteruit, draai links, draai rechts_}
+- Wat zijn de verschillende statussen waarin de agent zich kan bevinden?
+   _Bijv._: {menhir op rug, geen menhir op rug}
+- Wat kan de agent waarnemen?
+   _Bijv._: {2 &times; 13 ray-casts over totale hoek van 120°}
+- Hoe zet ik het beloningssysteem op?
+
+De eerste 3 punten komen overeen met de invoer en de uitvoer van het NN. Om te helpen een juiste keuze te maken voor deze drie zaken, zijn er andere vragen die je jezelf kan stellen:
+
+- Zijn de aan te leren handelingen/wijzigingen eenvoudig programmeerbaar? Zo ja, dan is het inschakelen van een NN misschien wel niet de beste oplossing! &rarr; _Maak de handelingen complexer_
+- Zijn de acties verenigbaar? Soms zijn bepaalde combinaties van acties onverenigbaar. Zo zou men willen kunnen verhinderen dat Obelix draait terwijl hij achteruit gaat. &rarr; Gebruik masking, zie [hier](https://github.com/Unity-Technologies/ml-agents/blob/release_6_docs/docs/Learning-Environment-Design-Agents.md) voor meer uitleg hierover. 
+- Zijn de observaties überhaupt voldoende om de nodige verborgen patronen in de invoer te ontdekken? &rarr; _Voeg observaties toe_
+- Is het scenario tijdens de trainingsfase representatief voor de situaties die de agent in het finale spel (of de finale VR-simulatie) zal tegenkomen &rarr; her-analyseer de logica van het spel of de simulatie
+- Zijn de gegevens die gebruikt worden voor het beloningssysteem ook werkelijk waarneembaar door de agent? Bijvoorbeeld, leer je een agent om een balletje met een boog in een korfbal-korf te gooien (als dusdanig slecht voorbeeld want eenvoudig programmeerbaar). Behoort de eigenlijke vorm van de boog of de precieze tijdspanne dat de bal in de lucht is tot de waarnemingen? Of enkel de richting waarin en de kracht waarmee de bal wordt geworpen? In het eerste geval geef je het antwoord a.h.w. al mee aan het NN, terwijl het net de bedoeling is dat de agent de handeling 'uit zichzelf' aanleert!
+
+Waar je je best niet teveel mee inlaat zijn de afwerking, de texturen, de materialen, enz. &hellip;
+
+Tenslotte, nog wat tips voor het trainen van je agent:
+
+```{definition simple-start, name="Eenvoudige start"}
+Begin zo eenvoudig mogelijk. Pas wanneer het trainen end-to-end goed lijkt te verlopen, voeg je geleidelijk aan meer complexiteit toe.
+```
+
+```{definition reproduceerbaarheid, name="Reproduceerbaarheid"}
+Zorg ervoor dat in jullie finaal project de training van je agent reproduceerbaar is.
+```

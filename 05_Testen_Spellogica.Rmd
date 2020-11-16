@@ -1,0 +1,21 @@
+
+```{r include=FALSE}
+library(knitr)
+library(data.table)
+library(magrittr)
+
+opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE,
+  warning = FALSE)
+
+dyad <- readRDS("r/Palette_5YR_5B_Dyad.RDS")
+palette(dyad[c(9, 20, 66)])
+```
+
+# Testen van de spellogica
+
+Je kan nu de spellogica beginnen testen door zelf Obelix voort te bewegen d.m.v. de pijltjestoetsen. Controleer dat de instelling _Behavior Type_ op _Heuristic_ of _Default _ staat. Je kan nu met de pijltjes toetsen het spel manueel bedienen (dus menselijke brein i.p.v. artificieel NN). Probeer manueel een menhir te vangen en naar hun bestemming te brengen, pas desnoods de snelheid van de menhirs aan. Controleer het scorebord. Schakel tijdelijk de afstraffing voor het niets doen uit door de statement `AddReward(-0.001f);` in commentaar te plaatsen zodat je de tijd krijgt om te controleren dat de juiste beloning bij de juiste acties worden gegeven (vergeet daarna niet terug te zetten!). Controleer ook eens een nieuwe episode gestart wordt indien Obelix van het speelveld valt of indien alle menhir op hun plaats zijn (je kan het aantal aanpassen).
+
+```{definition name="Eerst manueel testen"}
+Begin pas met de trainingsfase indien je 100% bent dat de spellogica helemaal goed zit.
+``` 
+
