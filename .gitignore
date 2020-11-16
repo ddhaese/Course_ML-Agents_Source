@@ -37,3 +37,10 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Video files (too big)
+vid
+
+# Media files
+.media.pptx
+Concept.pptx
